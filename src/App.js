@@ -20,6 +20,7 @@ useEffect(()=>{
 const Submit=()=>{
   
   dispatch(itemsReducer.actions.ADD_ITEMS({
+    id:list.length>0?list[list.length-1].id+1:0,
     item,
     budget:+budget
   }))
@@ -50,10 +51,10 @@ const Submit=()=>{
       <button onClick={Submit}>제출</button>
         
       <div>
-        {list.map((i,index)=><Card key={index} item={i.item} budget={i.budget}/>)}
+        {list.map((i,index)=><Card key={index} id={i.id} item={i.item} budget={i.budget}/>)}
       </div>
        </div>
-   <h1>총지출:{total}원</h1>
+   <h1>총 지출:{total}원</h1>
     </div>
   );
 }
