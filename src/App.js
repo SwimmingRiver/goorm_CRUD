@@ -1,14 +1,19 @@
 
 import './App.css';
 import { useState } from 'react';
-
+import {Card} from './Card';
 
 
 function App() {
 const [item,setItem]=useState('');
 const [budget,setBudget]=useState(0);
+const [list,setList]=useState([]);
+
 const Submit=()=>{
-  console.log(item,budget);
+  setList(()=>[...list,{
+    item,
+    budget
+  }])
   setItem('');
   setBudget(0);
 }
@@ -28,6 +33,9 @@ const Submit=()=>{
       <button onClick={Submit}>제출</button>
        </div>
         
+      </div>
+      <div>
+        {list.map((i,index)=><Card key={index} item={i.item} budget={i.budget}/>)}
       </div>
    
     </div>
