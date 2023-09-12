@@ -1,22 +1,32 @@
 
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Card} from './Card';
+import { useDispatch, useSelector } from 'react-redux';
+import { itemsReducer } from './Reducer/items';
+
 
 
 function App() {
 const [item,setItem]=useState('');
 const [budget,setBudget]=useState(0);
-const [list,setList]=useState([]);
-
+const list = useSelector((state)=>state.item);
+const dispatch = useDispatch();
+const [total,setTotal]=useState();
+useEffect(()=>{
+  setTotal(0);
+  list.map((el)=>setTotal((prev)=>prev+=el.budget));
+},[list]);
 const Submit=()=>{
-  setList(()=>[...list,{
+  
+  dispatch(itemsReducer.actions.ADD_ITEMS({
     item,
-    budget
-  }])
+    budget:+budget
+  }))
   setItem('');
   setBudget(0);
 }
+
   return (
     <div className="App">
       <header>
@@ -25,19 +35,25 @@ const Submit=()=>{
       </header>
 
       <div className='Wrapper'>
-       <div>
-       <h2>지출항목</h2>
+       <div id="item">
+        <div>
+        <h2>지출항목</h2>
         <input value={item} type='text' placeholder='예)렌트비' onChange={(e)=>{setItem(e.target.value)}}/>
-        <h2>비용</h2>
+        </div>
+       <div>
+       <h2>비용</h2>
         <input value={budget} type='number' onChange={(e)=>{setBudget(e.target.value)}}/>
-      <button onClick={Submit}>제출</button>
        </div>
         
       </div>
+      
+      <button onClick={Submit}>제출</button>
+        
       <div>
         {list.map((i,index)=><Card key={index} item={i.item} budget={i.budget}/>)}
       </div>
-   
+       </div>
+   <h1>총지출:{total}원</h1>
     </div>
   );
 }
