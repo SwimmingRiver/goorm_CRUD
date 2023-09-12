@@ -1,33 +1,69 @@
 
 import './App.css';
 import { useEffect, useState } from 'react';
-import {Card} from './Card';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { itemsReducer } from './Reducer/items';
 
 
+      
 
 function App() {
 const [item,setItem]=useState('');
 const [budget,setBudget]=useState(0);
 const list = useSelector((state)=>state.item);
 const dispatch = useDispatch();
+const [editMode,setEditMode]=useState(false);
 const [total,setTotal]=useState();
+const [selectedId,setSelectedId] =useState(0);
 useEffect(()=>{
   setTotal(0);
   list.map((el)=>setTotal((prev)=>prev+=el.budget));
 },[list]);
 const Submit=()=>{
-  
+  if(editMode){
+    console.log(selectedId)
+   dispatch(itemsReducer.actions.EDIT_ITEMS({
+      id:selectedId,
+      item:item,
+      budget:+budget,
+    }));
+    
+  }
+  else{
   dispatch(itemsReducer.actions.ADD_ITEMS({
     id:list.length>0?list[list.length-1].id+1:0,
     item,
     budget:+budget
-  }))
+  }))}
   setItem('');
   setBudget(0);
+  setEditMode(false)
 }
 
+const Card=(props)=>{
+  const dispatch = useDispatch()
+  const Edit=()=>{
+    setItem(props.item);
+    setBudget(props.budget);
+    setEditMode(true);
+    setSelectedId(props.id);
+    console.log(editMode);
+  };
+
+  const Delete=()=>{
+    dispatch(itemsReducer.actions.DELETE_ITEMS(props.id))
+  };
+  return(<div className="CardWrappr">
+    
+    <h1>{props.item}</h1>
+    <h1>{props.budget}</h1>
+    <div>
+    <button onClick={Edit}>edit</button>
+    <button onClick={Delete}>delete</button>
+    </div>
+  </div>)
+  };
   return (
     <div className="App">
       <header>
@@ -48,7 +84,7 @@ const Submit=()=>{
         
       </div>
       
-      <button onClick={Submit}>제출</button>
+      <button onClick={Submit}>{editMode?"수정":"제출"}</button>
         
       <div>
         {list.map((i,index)=><Card key={index} id={i.id} item={i.item} budget={i.budget}/>)}

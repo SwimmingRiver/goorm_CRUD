@@ -13,6 +13,9 @@ export const itemsReducer = createSlice({
         ADD_ITEMS:(state,action)=>{
             state.push(action.payload);
         },
+        EDIT_ITEMS:(state,action)=>{
+            state.splice(action.payload.id,1,action.payload);
+        },
         DELETE_ITEMS:(state,action)=>{
             state.splice(action.payload,1);
             return state
