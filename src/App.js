@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { itemsReducer } from './Reducer/items';
 
 
-      
-
 function App() {
 const [item,setItem]=useState('');
 const [budget,setBudget]=useState(0);
@@ -16,6 +14,7 @@ const dispatch = useDispatch();
 const [editMode,setEditMode]=useState(false);
 const [total,setTotal]=useState();
 const [selectedId,setSelectedId] =useState(0);
+const [messageOn,setMessageOn]=useState('');
 useEffect(()=>{
   setTotal(0);
   list.map((el)=>setTotal((prev)=>prev+=el.budget));
@@ -28,46 +27,63 @@ const Submit=()=>{
       item:item,
       budget:+budget,
     }));
-    
+    setMessageOn("수정");
   }
   else{
   dispatch(itemsReducer.actions.ADD_ITEMS({
     id:list.length>0?list[list.length-1].id+1:0,
     item,
     budget:+budget
-  }))}
+  }))
+  setMessageOn("생성");
+}
   setItem('');
   setBudget(0);
   setEditMode(false)
 }
 
-const Card=(props)=>{
-  const dispatch = useDispatch()
-  const Edit=()=>{
-    setItem(props.item);
-    setBudget(props.budget);
-    setEditMode(true);
-    setSelectedId(props.id);
-    console.log(editMode);
-  };
+    const Card=(props)=>{
+      const dispatch = useDispatch()
+      const Edit=()=>{
+        setItem(props.item);
+        setBudget(props.budget);
+        setEditMode(true);
+        setSelectedId(props.id);
+      };
 
-  const Delete=()=>{
-    dispatch(itemsReducer.actions.DELETE_ITEMS(props.id))
-  };
-  return(<div className="CardWrappr">
-    
-    <h1>{props.item}</h1>
-    <h1>{props.budget}</h1>
-    <div>
-    <button onClick={Edit}>edit</button>
-    <button onClick={Delete}>delete</button>
-    </div>
-  </div>)
-  };
+      const Delete=()=>{
+        dispatch(itemsReducer.actions.DELETE_ITEMS(props.id))
+        setMessageOn("삭제");
+      };
+      return(<div className="CardWrappr">
+        
+        <h1>{props.item}</h1>
+        <h1>{props.budget}</h1>
+        <div>
+        <button onClick={Edit}>edit</button>
+        <button onClick={Delete}>delete</button>
+        </div>
+      </div>)
+      };
+  const MessageBox=()=>{
+    if(messageOn === "생성"){
+      return <h1>생성</h1>
+    }
+    if(messageOn === "수정"){
+      return <h1>수정</h1>
+    }
+    if(messageOn === "삭제"){
+      return <h1>삭제</h1>
+    }
+  }
+useEffect(()=>{
+  setTimeout(()=>{setMessageOn("")},2000)
+},[messageOn]);
+
   return (
     <div className="App">
       <header>
-        <h2>메세지 수정/삭제</h2>
+        {messageOn===""?null:<MessageBox/>}
         <h1>예산 계산기</h1>
       </header>
 
