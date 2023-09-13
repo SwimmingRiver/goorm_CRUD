@@ -20,5 +20,8 @@ export const itemsReducer = createSlice({
             state.splice(action.payload,1);
             return state
         },
+        RESET_ITEMS:(state)=>{
+            state.splice(0,state.length)
+        }
     }
 });

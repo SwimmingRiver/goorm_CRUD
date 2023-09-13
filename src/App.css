@@ -6,13 +6,13 @@
   align-items: center;
   height: 100vh;
 }
-
-
-
+button{
+  cursor: pointer;
+}
 .Wrapper{
   background-color: #fff;
-  height: 40vh;
   width: 50vw;
+  height: 60vh;
   display: flex;
   flex-direction: column;
 }
@@ -20,5 +20,114 @@
   display: flex;
   justify-content: space-around;
   width: 50vw;
+  height: 15vh;
+}
+.Wrapper div{
+  height: 10vh;
+}
+.Wrapper h2{
+  color: #e9b872;
+  font-weight: 500;
+}
+.Wrapper button{
+  width: 10vw;
+  color: #fff;
+  background-color: #8ea959;
+  border: none;
+}
+
+input{  border: none; 
+  border-bottom: 1px solid #e9b872;
+  padding: 5px; 
+  outline: none;}
+
+.CardWrapper{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: solid 1px #ddd;
+  height:9vh;
+  width: 45vw;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+.CardWrapper:hover{
+  transform: scale(1.05);
+}
+.CardWrapper h1{
+  font-weight: 400;
+}
+.CardWrapper button{
+ border: none;
+ margin-top: 30px;
+ background-color: white;
+ cursor: pointer;
+ width: 50px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+  color:green;
+}
+#send{
+ color: #fff;
+
+}
+#delete{
+color:#c55150;
+}
+#submit{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 5vw;
+  border-radius: 3px;
+  margin-left: 50px;
+}
+#messageBox{
+  background-color: green;
+  width: 50vw;
+  color: #fff;
+}
+#deleteBox{
+  background-color: red;
+  width: 50vw;
+  color: #fff;
+  font-weight: 500;
+}
+#total{
+  position: relative;
+  text-align: right;
+  width: 50vw;
+}
+#list{
+  margin-top: 10px;
   height: 30vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#resetBtn{
+  margin-top: 10px;
+  margin-left: 35px;
+  margin-bottom: 10px;
+  width: 8vw;
+  height: 8vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 2px;
+}
+
+#resetIcon{
+  color: white;
+  font-size: 20px;
+  margin-bottom:3px ;
+  width: 1vw;
 }
